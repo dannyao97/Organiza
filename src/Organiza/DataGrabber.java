@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import com.google.gson.*;
+import java.io.File;
 
 /**
  *
@@ -80,7 +81,7 @@ public class DataGrabber
             {
                 System.out.println(output);
             }
-            */
+             */
             conn.disconnect();
 
         } catch (MalformedURLException e)
@@ -93,6 +94,27 @@ public class DataGrabber
 
             e.printStackTrace();
 
+        }
+    }
+
+    public void getMovies()
+    {
+        String curDir = System.getProperty("user.dir") + "\\DATA\\Movies";
+        File file = new File(curDir);
+        String[] names = file.list();
+
+        if (names == null)
+        {
+            System.out.println("MAKE SURE MOVIES ARE LOCATED IN 'DATA/Movies' spelled exactly.");
+        } else
+        {
+            for (String name : names)
+            {
+                if (new File(curDir + "\\" + name).isDirectory())
+                {
+                    System.out.println(name);
+                }
+            }
         }
     }
 }

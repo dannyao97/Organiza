@@ -75,7 +75,8 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void btnFlatPressed(ActionEvent event)
     {
-        data.getRequest();
+        //data.getRequest();
+        data.getMovies();
     }
 
     @Override
@@ -108,10 +109,10 @@ public class FXMLDocumentController implements Initializable
             }
         });
 
-        setTable();
+        setupTable();
     }
 
-    public void setTable()
+    public void setupTable()
     {
         scrollMovies.setFitToWidth(true);
         tableMovies.getSelectionModel().setCellSelectionEnabled(true);
@@ -126,24 +127,6 @@ public class FXMLDocumentController implements Initializable
                 }
             }
         });
-        /*tableMovies.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
-        {
-            @Override
-            public void changed(ObservableValue observableValue, Object oldValue, Object newValue)
-            {
-                System.out.println(observableValue);
-                //Check whether item is selected and set value of selected item to Label
-                if (tableMovies.getSelectionModel().getSelectedItem() != null)
-                {
-                    TableViewSelectionModel selectionModel = tableMovies.getSelectionModel();
-                    ObservableList selectedCells = selectionModel.getSelectedCells();
-                    TablePosition tablePosition = (TablePosition) selectedCells.get(0);
-                    Object val = tablePosition.getTableColumn().getCellData(newValue);
-                    System.out.println("Selected Value" + val);
-                    System.out.println("row: " + tablePosition.getRow() +"\ncol: " + tablePosition.getColumn());
-                }
-            }
-        });*/
 
         TableColumn<TableImage, ImageView> col1 = new TableColumn<>("col1");
         ImageView img1 = new ImageView("https://images-na.ssl-images-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_SX300.jpg");
@@ -201,18 +184,6 @@ public class FXMLDocumentController implements Initializable
         img10.setPreserveRatio(true);
         img10.setFitWidth(170);
 
-        /*int i = 0;
-        while (i != 1)
-        {
-
-            try
-            {
-                imageList.add(new TableImage(new ImageView("https://images-na.ssl-images-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_SX300.jpg")));
-            } catch (Exception e)
-            {
-            }
-            i++;
-        }*/
         tableMovies.getColumns().addAll(col1, col2, col3, col4, col5);
         imageList.add(new TableImage(img1, img2, img3, img4, img5));
         imageList.add(new TableImage(null, null, null, null, null));
@@ -228,9 +199,6 @@ public class FXMLDocumentController implements Initializable
             header.setVisible(false);
             header.setManaged(false);
         }
-
-        //tableMovies.setStyle("visibility: hidden; -fx-padding: -1em;");
-        //tableMovies.getColumns().addAll(colList);
     }
 
     public void setStage(final Stage stage)
