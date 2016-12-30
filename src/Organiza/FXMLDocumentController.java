@@ -75,7 +75,7 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void btnFlatPressed(ActionEvent event)
     {
-        //data.getRequest();
+        //data.sendRequest();
         data.getMovies();
     }
 

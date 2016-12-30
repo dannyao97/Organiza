@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Organiza.jar" size="16173" download="eager" />
+    <jar href="Organiza.jar" size="17060" download="eager" />
     <jar href="lib\gson-2.8.0-javadoc.jar" size="261988" download="eager" />
     <jar href="lib\gson-2.8.0.jar" size="231952" download="eager" />
     <jar href="lib\jfoenix.jar" size="2206016" download="eager" />
