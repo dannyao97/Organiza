@@ -14,10 +14,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -25,9 +22,11 @@ import java.util.List;
  */
 public class DataGrabber
 {
+    protected ArrayList<Movie> movieList;
+
     public DataGrabber()
     {
-
+        movieList = new ArrayList<>();
     }
 
     private String createRequest(String movie)
@@ -70,36 +69,14 @@ public class DataGrabber
                     (conn.getInputStream())));
             JsonObject obj = new JsonParser().parse(br.readLine()).getAsJsonObject();
 
-            System.out.println(conn.getResponseMessage());
-            /*String title = obj.get("Title").getAsString();
-            String director = obj.get("Director").getAsString();
-            String year = obj.get("Year").getAsString();
-            String genre = obj.get("Genre").getAsString();
-            String plot = obj.get("Plot").getAsString();
-            String tomatoes = obj.get("tomatoRating").getAsString();
-            String poster = obj.get("Poster").getAsString();
-
-            System.out.println("TITLE: " + title);
-            System.out.println("DIRECTOR: " + director);
-            System.out.println("YEAR: " + year);
-            System.out.println("GENRE: " + genre);
-            System.out.println("PLOT: " + plot);
-            System.out.println("TOMATOES: " + tomatoes);
-            System.out.println("POSTER: " + poster);*/
-
+            //System.out.println(conn.getResponseMessage());
             conn.disconnect();
             return obj;
 
-        } catch (MalformedURLException e)
+        }
+        catch (Exception e)
         {
-
             e.printStackTrace();
-
-        } catch (IOException e)
-        {
-
-            e.printStackTrace();
-
         }
         return null;
     }
@@ -109,46 +86,59 @@ public class DataGrabber
         String curDir = System.getProperty("user.dir") + "\\DATA\\Movies";
         File file = new File(curDir);
         File movieDir;
-        String movie;
+        String movieName;
+        Movie movie;
         JsonObject obj;
         String[] names = file.list();
 
         if (names == null)
         {
             System.out.println("MAKE SURE MOVIES ARE LOCATED IN 'DATA/Movies' spelled exactly.");
-        } else
+            System.out.println("Current Directory: " + curDir);
+        }
+        else
         {
             for (String name : names)
             {
                 movieDir = new File(curDir + "\\" + name);
                 if (movieDir.isDirectory())
                 {
-                    movie = name.split("\\(|\\[")[0];
-                    if (movie.endsWith("Collection"))
+                    movieName = name.split("\\(|\\[")[0];
+                    if (movieName.endsWith("Collection"))
                     {
-                        System.out.println("**********************" + movie);
-                    } else
+                        System.out.println("**********************" + movieName);
+                    }
+                    else
                     {
-                        System.out.println(movie);
+                        //System.out.println(movieName);
                         if (!Arrays.asList(movieDir.list()).contains("data.json"))
                         {
-                            obj = sendRequest(movie);
+                            obj = sendRequest(movieName);
                             if (obj != null)
                             {
                                 writeToFile(movieDir.getPath(), obj);
                             }
-                        } else
-                        {
-                            readFromFile(movieDir.getPath());
+                            else
+                            {
+                                System.out.println("Can't find movie.");
+                            }
                         }
-                    }
 
-                    /*for (String f: movieDir.list())
-                    {
-                        System.out.println("---" + f);
-                    }*/
+                        obj = readFromFile(movieDir.getPath());
+                        if (obj != null)
+                        {
+                            movie = new Movie(obj);
+                            movie.setPosterUrl(movieDir.getPath() + "/poster.jpg");
+                            movieList.add(movie);
+                        }
+                        else
+                        {
+                            System.out.println("Error reading movie data.json");
+                        }
+
+                    }
                 }
-                break;
+                //break;
             }
         }
     }
@@ -177,13 +167,14 @@ public class DataGrabber
             FileOutputStream fos = new FileOutputStream(path + "/poster.jpg");
             fos.write(response);
             fos.close();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
     }
 
-    public void readFromFile(String path)
+    public JsonObject readFromFile(String path)
     {
         try
         {
@@ -191,7 +182,7 @@ public class DataGrabber
             BufferedReader br = new BufferedReader(f);
             JsonObject obj = new JsonParser().parse(br.readLine()).getAsJsonObject();
 
-            String title = obj.get("Title").getAsString();
+            /*String title = obj.get("Title").getAsString();
             String director = obj.get("Director").getAsString();
             String year = obj.get("Year").getAsString();
             String genre = obj.get("Genre").getAsString();
@@ -206,9 +197,19 @@ public class DataGrabber
             System.out.println("PLOT: " + plot);
             System.out.println("TOMATOES: " + tomatoes);
             System.out.println("POSTER: " + poster);
-        } catch (Exception e)
+            System.out.println("");*/
+
+ /*for (Map.Entry<String, JsonElement> e : obj.entrySet())
+            {
+                System.out.println(e.getKey() + " = obj.get(\"" + e.getKey() + "\").getAsString();");
+            }*/
+            return obj;
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
+
+        return null;
     }
 }
