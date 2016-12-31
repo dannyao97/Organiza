@@ -7,9 +7,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import com.google.gson.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -122,10 +130,15 @@ public class DataGrabber
                     } else
                     {
                         System.out.println(movie);
-                        obj = sendRequest(movie);
-                        if (obj != null)
+                        if (!Arrays.asList(movieDir.list()).contains("data.json"))
                         {
-                            writeToFile(movieDir.getPath(), obj);
+                            obj = sendRequest(movie);
+                            if (obj != null)
+                            {
+                                writeToFile(movieDir.getPath(), obj);
+                            }
+                        } else
+                        {
                             readFromFile(movieDir.getPath());
                         }
                     }
@@ -142,26 +155,42 @@ public class DataGrabber
 
     public void writeToFile(String path, JsonObject obj)
     {
-        try (FileWriter file = new FileWriter(path + "\\data.json"))
+        try (FileWriter file = new FileWriter(path + "/data.json"))
         {
+            //Save json file
             file.write(obj.toString());
-            System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + obj);
-        }
-        catch (Exception e)
+
+            //Save poster image
+            URL url = new URL(obj.get("Poster").getAsString());
+            InputStream in = new BufferedInputStream(url.openStream());
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            int n = 0;
+            while (-1 != (n = in.read(buf)))
+            {
+                out.write(buf, 0, n);
+            }
+            out.close();
+            in.close();
+            byte[] response = out.toByteArray();
+
+            FileOutputStream fos = new FileOutputStream(path + "/poster.jpg");
+            fos.write(response);
+            fos.close();
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
     }
-    
+
     public void readFromFile(String path)
     {
         try
         {
-            FileReader f = new FileReader(path + "\\data.json");
-            BufferedReader br = new BufferedReader(f);         
+            FileReader f = new FileReader(path + "/data.json");
+            BufferedReader br = new BufferedReader(f);
             JsonObject obj = new JsonParser().parse(br.readLine()).getAsJsonObject();
-            
+
             String title = obj.get("Title").getAsString();
             String director = obj.get("Director").getAsString();
             String year = obj.get("Year").getAsString();
@@ -176,9 +205,8 @@ public class DataGrabber
             System.out.println("GENRE: " + genre);
             System.out.println("PLOT: " + plot);
             System.out.println("TOMATOES: " + tomatoes);
-            System.out.println("POSTER: " + poster);         
-        }
-        catch (Exception e)
+            System.out.println("POSTER: " + poster);
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
