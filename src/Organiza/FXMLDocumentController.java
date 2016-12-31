@@ -77,6 +77,24 @@ public class FXMLDocumentController implements Initializable
         data.getMovies();
         setupTable();
     }
+    
+    @FXML
+    private void btnTVClicked(ActionEvent event)
+    {
+        btnTv.setStyle("-fx-text-fill: #5CC7EB; -fx-font-weight: Bold; -fx-font-size: 22;");
+        btnMovies.setStyle("-fx-text-fill: #b9b9b9; -fx-font-weight: Regular; -fx-font-size: 22;");
+        scrollMovies.setVisible(false);
+        scrollTV.setVisible(true);
+    }
+    
+    @FXML
+    private void btnMoviesClicked(ActionEvent event)
+    {
+        btnTv.setStyle("-fx-text-fill: #b9b9b9; -fx-font-weight: Regular; -fx-font-size: 22;");
+        btnMovies.setStyle("-fx-text-fill: #5CC7EB; -fx-font-weight: Bold; -fx-font-size: 22;");
+        scrollMovies.setVisible(true);
+        scrollTV.setVisible(false);        
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
