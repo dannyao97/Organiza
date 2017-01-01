@@ -12,7 +12,7 @@ public class Movie
 {
     protected JsonObject movieData;
     protected String posterURL;
-    
+
     protected String Title;
     protected String Year;
     protected String Rated;
@@ -59,43 +59,46 @@ public class Movie
     {
         posterURL = url;
     }
-    
+
     private void setMovie(JsonObject obj)
     {
-        Title = obj.get("Title").getAsString();
-        Year = obj.get("Year").getAsString();
-        Rated = obj.get("Rated").getAsString();
-        Released = obj.get("Released").getAsString();
-        Runtime = obj.get("Runtime").getAsString();
-        Genre = obj.get("Genre").getAsString();
-        Director = obj.get("Director").getAsString();
-        Writer = obj.get("Writer").getAsString();
-        Actors = obj.get("Actors").getAsString();
-        Plot = obj.get("Plot").getAsString();
-        Language = obj.get("Language").getAsString();
-        Country = obj.get("Country").getAsString();
-        Awards = obj.get("Awards").getAsString();
-        Poster = obj.get("Poster").getAsString();
-        Metascore = obj.get("Metascore").getAsString();
-        imdbRating = obj.get("imdbRating").getAsString();
-        imdbVotes = obj.get("imdbVotes").getAsString();
-        imdbID = obj.get("imdbID").getAsString();
-        Type = obj.get("Type").getAsString();
-        tomatoMeter = obj.get("tomatoMeter").getAsString();
-        tomatoImage = obj.get("tomatoImage").getAsString();
-        tomatoRating = obj.get("tomatoRating").getAsString();
-        tomatoReviews = obj.get("tomatoReviews").getAsString();
-        tomatoFresh = obj.get("tomatoFresh").getAsString();
-        tomatoRotten = obj.get("tomatoRotten").getAsString();
-        tomatoConsensus = obj.get("tomatoConsensus").getAsString();
-        tomatoUserMeter = obj.get("tomatoUserMeter").getAsString();
-        tomatoUserRating = obj.get("tomatoUserRating").getAsString();
-        tomatoUserReviews = obj.get("tomatoUserReviews").getAsString();
-        tomatoURL = obj.get("tomatoURL").getAsString();
-        DVD = obj.get("DVD").getAsString();
-        BoxOffice = obj.get("BoxOffice").getAsString();
-        Production = obj.get("Production").getAsString();
-        Website = obj.get("Website").getAsString();
-        Response = obj.get("Response").getAsString();
+        if (obj != null)
+        {
+            Title = obj.get("Title").getAsString();
+            Year = obj.get("Year").getAsString();
+            Rated = obj.get("Rated").getAsString();
+            Released = obj.get("Released").getAsString();
+            Runtime = obj.get("Runtime").getAsString();
+            Genre = obj.get("Genre").getAsString();
+            Director = obj.get("Director").getAsString();
+            Writer = obj.get("Writer").getAsString();
+            Actors = obj.get("Actors").getAsString();
+            Plot = obj.get("Plot").getAsString();
+            Language = obj.get("Language").getAsString();
+            Country = obj.get("Country").getAsString();
+            Awards = obj.get("Awards").getAsString();
+            Poster = obj.get("Poster").getAsString();
+            Metascore = obj.get("Metascore").getAsString();
+            imdbRating = obj.get("imdbRating").getAsString();
+            imdbVotes = obj.get("imdbVotes").getAsString();
+            imdbID = obj.get("imdbID").getAsString();
+            Type = obj.get("Type").getAsString();
+            tomatoMeter = obj.get("tomatoMeter").getAsString();
+            tomatoImage = obj.get("tomatoImage").getAsString();
+            tomatoRating = obj.get("tomatoRating").getAsString();
+            tomatoReviews = obj.get("tomatoReviews").getAsString();
+            tomatoFresh = obj.get("tomatoFresh").getAsString();
+            tomatoRotten = obj.get("tomatoRotten").getAsString();
+            tomatoConsensus = obj.get("tomatoConsensus").getAsString();
+            tomatoUserMeter = obj.get("tomatoUserMeter").getAsString();
+            tomatoUserRating = obj.get("tomatoUserRating").getAsString();
+            tomatoUserReviews = obj.get("tomatoUserReviews").getAsString();
+            tomatoURL = obj.get("tomatoURL").getAsString();
+            DVD = obj.get("DVD").getAsString();
+            BoxOffice = obj.get("BoxOffice").getAsString();
+            Production = obj.get("Production").getAsString();
+            Website = obj.get("Website").getAsString();
+            Response = obj.get("Response").getAsString();
+        }
     }
 }

@@ -52,6 +52,7 @@ public class DataGrabber
     {
         try
         {
+            System.out.print("Getting Movie Information: " + movie + "..........");
             String req = createRequest(movie);
 
             URL url = new URL(req);
@@ -69,10 +70,16 @@ public class DataGrabber
                     (conn.getInputStream())));
             JsonObject obj = new JsonParser().parse(br.readLine()).getAsJsonObject();
 
-            //System.out.println(conn.getResponseMessage());
-            conn.disconnect();
-            return obj;
-
+            if (obj.get("Response").getAsBoolean())
+            {
+                System.out.println(conn.getResponseMessage());
+                conn.disconnect();
+                return obj;
+            }
+            else
+            {
+                System.out.print("ERROR: ");
+            }
         }
         catch (Exception e)
         {
@@ -94,7 +101,7 @@ public class DataGrabber
         if (names == null)
         {
             System.out.println("MAKE SURE MOVIES ARE LOCATED IN 'DATA/Movies' spelled exactly.");
-            System.out.println("Current Directory: " + curDir);
+            System.out.println("Current Directory: " + System.getProperty("user.dir"));
         }
         else
         {
@@ -104,6 +111,7 @@ public class DataGrabber
                 if (movieDir.isDirectory())
                 {
                     movieName = name.split("\\(|\\[")[0];
+                    movieName.replaceAll("~", "/");
                     if (movieName.endsWith("Collection"))
                     {
                         System.out.println("**********************" + movieName);
@@ -120,22 +128,28 @@ public class DataGrabber
                             }
                             else
                             {
-                                System.out.println("Can't find movie.");
+                                System.out.println("Could not find movie!");
                             }
                         }
 
-                        obj = readFromFile(movieDir.getPath());
-                        if (obj != null)
+                        if (Arrays.asList(movieDir.list()).contains("data.json"))
                         {
-                            movie = new Movie(obj);
-                            movie.setPosterUrl(movieDir.getPath() + "/poster.jpg");
-                            movieList.add(movie);
+                            try
+                            {
+                                obj = readFromFile(movieDir.getPath());
+                                if (obj != null)
+                                {
+                                    movie = new Movie(obj);
+                                    movie.setPosterUrl(movieDir.getPath() + "/poster.jpg");
+                                    movieList.add(movie);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                                System.out.println("Movie Directory: " + movieDir.getPath());
+                            }
                         }
-                        else
-                        {
-                            System.out.println("Error reading movie data.json");
-                        }
-
                     }
                 }
                 //break;
@@ -212,7 +226,7 @@ public class DataGrabber
 
         return null;
     }
-    
+
     public Movie getMovie(String imdb)
     {
         for (Movie mov : movieList)

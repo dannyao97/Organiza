@@ -51,7 +51,6 @@
 
     -->
    
-    
     <target name="package-for-store" depends="jar">
 
 
@@ -67,7 +66,7 @@
 
         <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
             <zipgroupfileset dir="dist" includes="*.jar"/>
-            <zipgroupfileset dir="dist/lib" includes="*.jar"/>
+            <zipgroupfileset dir="lib" includes="*.jar"/>
 
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
@@ -82,4 +81,39 @@
         <delete file="${store.dir}/temp_final.jar"/>
 
     </target>
+    
+    <!--
+    <property name="dist.dir" value="dist"/>
+    <property name="app.jar" value="Organiza.jar"/>
+    <property name="bundle-dist.dir" value="Bundle"/> 
+    
+    <target name="do-deploy-bundle">
+        <property name="tmp.file" value="temp_final.jar"/>
+
+        <delete file="${dist.dir}/${app.jar}" />
+        <delete dir="${bundle-dist.dir}"/>
+        <mkdir dir="${bundle-dist.dir}"/>
+
+        <fx:jar destfile="${bundle-dist.dir}/${tmp.file}" filesetmanifest="skip">
+            <zipgroupfileset dir="${dist.dir}" includes="*.jar" />
+            <zipgroupfileset dir="lib" includes="*.jar" />
+
+            <manifest>
+                <attribute name="Implementation-Vendor" value="${app.vendor}"/>
+                <attribute name="Implementation-Title" value="${app.name}"/>
+                <attribute name="Implementation-Version" value="${app.version}"/>
+                <attribute name="Main-Class" value="com.poterion.texovac.application.Main" />
+                <attribute name="JavaFX-Version" value="2.2" />
+                <attribute name="JavaFX-Feature-Proxy" value="None"/>
+                <attribute name="Created-By" value="JavaFX Packager" />
+            </manifest>
+        </fx:jar>
+
+        <zip destfile="${dist.dir}/${app.jar}">
+            <zipfileset src="${bundle-dist.dir}/${tmp.file}" excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA , META-INF/maven/**,META-INF/*.txt" />
+        </zip>
+
+        <delete file="${bundle-dist.dir}/${tmp.file}" />
+        <delete dir="${bundle-dist.dir}"/>
+    </target> -->
 </project>

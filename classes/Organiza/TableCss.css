@@ -1,0 +1,19 @@
+.table-row-cell:filled:selected { 
+    -fx-background: -fx-control-inner-background ;
+    -fx-background-color: -fx-table-cell-border-color, -fx-background ;
+    -fx-background-insets: 0, 0 0 0 0 ;
+    -fx-padding: 0 0 0 0;
+}
+.table-row-cell:odd:filled:selected {
+    -fx-background: -fx-control-inner-background-alt ;
+    -fx-padding: 0 0 0 0;
+}
+
+.table-cell {
+    -fx-accent: #1b1b1b;
+    -fx-padding: 0 0 0 0;
+}
+
+.text-area, .text-area .viewport, .text-area .content {
+    -fx-background-color: transparent ;
+}
