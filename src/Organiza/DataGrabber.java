@@ -81,7 +81,7 @@ public class DataGrabber
         return null;
     }
 
-    public void getMovies()
+    public void populateMovies()
     {
         String curDir = System.getProperty("user.dir") + "\\DATA\\Movies";
         File file = new File(curDir);
@@ -210,6 +210,18 @@ public class DataGrabber
             e.printStackTrace();
         }
 
+        return null;
+    }
+    
+    public Movie getMovie(String imdb)
+    {
+        for (Movie mov : movieList)
+        {
+            if (mov.imdbID.equals(imdb))
+            {
+                return mov;
+            }
+        }
         return null;
     }
 }
