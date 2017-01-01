@@ -140,6 +140,10 @@ public class DataGrabber
                                 if (obj != null)
                                 {
                                     movie = new Movie(obj);
+                                    if (!Arrays.asList(movieDir.list()).contains("poster.jpg"))
+                                    {
+                                        savePoster(movieDir.getPath(), obj);
+                                    }
                                     movie.setPosterUrl(movieDir.getPath() + "/poster.jpg");
                                     movieList.add(movie);
                                 }
@@ -163,9 +167,23 @@ public class DataGrabber
         {
             //Save json file
             file.write(obj.toString());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
+    private void savePoster(String path, JsonObject obj)
+    {
+        try
+        {
             //Save poster image
-            URL url = new URL(obj.get("Poster").getAsString());
+            String posterURL = obj.get("Poster").getAsString();
+            //High quality image url
+            //posterURL = posterURL.substring(0, posterURL.lastIndexOf("_V1") + 3);
+
+            URL url = new URL(posterURL);
             InputStream in = new BufferedInputStream(url.openStream());
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             byte[] buf = new byte[1024];

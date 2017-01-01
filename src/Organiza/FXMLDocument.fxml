@@ -54,7 +54,7 @@
                   </JFXButton>
                </children>
             </Pane>
-            <ScrollPane fx:id="scrollMovies" cache="true" cacheHint="QUALITY" hbarPolicy="NEVER" layoutY="100.0" pannable="true" prefHeight="710.0" prefWidth="1000.0" style="-fx-background-color: #1b1b1b;" vbarPolicy="NEVER">
+            <ScrollPane fx:id="scrollMovies" cacheHint="QUALITY" hbarPolicy="NEVER" layoutY="100.0" pannable="true" prefHeight="710.0" prefWidth="1000.0" style="-fx-background-color: #1b1b1b;" vbarPolicy="NEVER">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="708.0" prefWidth="1000.0" style="-fx-background-color: #1b1b1b;">
                      <children>
