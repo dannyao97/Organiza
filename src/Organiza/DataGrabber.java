@@ -256,4 +256,40 @@ public class DataGrabber
         }
         return null;
     }
+
+    public void sortMovies(String sort)
+    {
+        switch (sort)
+        {
+            case "Title":
+                Collections.sort(movieList, new Comparator<Movie>()
+                {
+                    public int compare(Movie m1, Movie m2)
+                    {
+                        return m1.Title.compareTo(m2.Title);
+                    }
+                });
+                break;
+            case "Length":
+                Collections.sort(movieList, new Comparator<Movie>()
+                {
+                    public int compare(Movie m1, Movie m2)
+                    {
+                        return m1.getLength() > m2.getLength() ? 1 : -1;
+                    }
+                });                
+                break;
+            case "Year":
+                Collections.sort(movieList, new Comparator<Movie>()
+                {
+                    public int compare(Movie m1, Movie m2)
+                    {
+                        return m1.getYear() > m2.getYear() ? 1 : -1;
+                    }
+                });                    
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -1,6 +1,8 @@
 package Organiza;
 
 import com.google.gson.JsonObject;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Store everything as string because no need for calculations. Only use is to
@@ -58,6 +60,22 @@ public class Movie
     public void setPosterUrl(String url)
     {
         posterURL = url;
+    }
+
+    public int getLength()
+    {
+        Pattern p = Pattern.compile("(^|\\s)([0-9]+)($|\\s)");
+        Matcher m = p.matcher(Runtime);
+        if (m.find())
+        {
+            return Integer.valueOf(m.group(2));
+        }
+        return 0;
+    }
+    
+    public int getYear()
+    {
+        return Integer.valueOf(Year);
     }
 
     private void setMovie(JsonObject obj)

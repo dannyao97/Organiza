@@ -1,6 +1,7 @@
 package Organiza;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import java.awt.Point;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -20,10 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -81,6 +81,10 @@ public class FXMLDocumentController implements Initializable
     private Label lblActors;
     @FXML
     private Label lblRuntime;
+    @FXML
+    private JFXComboBox comboSort;
+    @FXML
+    private Pane paneMovieControl;
 
     private static Stage stage;
     private Mouse mouse;
@@ -166,6 +170,11 @@ public class FXMLDocumentController implements Initializable
         scrollMovies.setVisible(true);
         scrollTV.setVisible(false);
 
+        comboSort.getItems().clear();
+        comboSort.getItems().addAll("Title", "Length", "Year");
+
+        paneMovieInfo.setVisible(true);
+
         if (paneMovieInfo.isVisible())
         {
             btnHideInfoClicked(null);
@@ -208,6 +217,16 @@ public class FXMLDocumentController implements Initializable
         clip.setLayoutY(paneMovieInfo.getHeight());
         paneMovieInfo.setClip(clip);
         paneMovieInfo.setVisible(false);
+        /*comboSort.setPromptText("Title");
+        comboSort.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
+        {
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue)
+            {
+                comboSort.setPromptText(newValue);
+                //data.sortMovies(newValue);
+            }
+        });*/
 
         //Read in movies
         btnMoviesClicked(null);
