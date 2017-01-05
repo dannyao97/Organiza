@@ -44,7 +44,6 @@ public class DataGrabber
         search += ("&" + tomatoes);
         search += ("&" + r);
 
-        //System.out.println("SEARCH: [" + search + "]");
         return search;
     }
 
@@ -93,9 +92,8 @@ public class DataGrabber
         String curDir = System.getProperty("user.dir") + "\\DATA\\Movies";
         File file = new File(curDir);
         File movieDir;
+        File collectDir;
         String movieName;
-        Movie movie;
-        JsonObject obj;
         String[] names = file.list();
 
         if (names == null)
@@ -114,49 +112,62 @@ public class DataGrabber
                     movieName.replaceAll("~", "/");
                     if (movieName.endsWith("Collection"))
                     {
-                        System.out.println("**********************" + movieName);
+                        for (String coll : movieDir.list())
+                        {
+                            collectDir = new File(movieDir + "\\" + coll);
+                            movieName = coll.split("\\(|\\[")[0];
+                            movieName.replaceAll("~", "/");
+                            checkData(collectDir, movieName);
+                        }
                     }
                     else
                     {
-                        //System.out.println(movieName);
-                        if (!Arrays.asList(movieDir.list()).contains("data.json"))
-                        {
-                            obj = sendRequest(movieName);
-                            if (obj != null)
-                            {
-                                writeToFile(movieDir.getPath(), obj);
-                            }
-                            else
-                            {
-                                System.out.println("Could not find movie!");
-                            }
-                        }
-
-                        if (Arrays.asList(movieDir.list()).contains("data.json"))
-                        {
-                            try
-                            {
-                                obj = readFromFile(movieDir.getPath());
-                                if (obj != null)
-                                {
-                                    movie = new Movie(obj);
-                                    if (!Arrays.asList(movieDir.list()).contains("poster.jpg"))
-                                    {
-                                        savePoster(movieDir.getPath(), obj);
-                                    }
-                                    movie.setPosterUrl(movieDir.getPath() + "/poster.jpg");
-                                    movieList.add(movie);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                e.printStackTrace();
-                                System.out.println("Movie Directory: " + movieDir.getPath());
-                            }
-                        }
+                        checkData(movieDir, movieName);
                     }
                 }
                 //break;
+            }
+        }
+    }
+
+    public void checkData(File movieDir, String movieName)
+    {
+        Movie movie;
+        JsonObject obj;
+        //System.out.println(movieName);
+        if (!Arrays.asList(movieDir.list()).contains("data.json"))
+        {
+            obj = sendRequest(movieName);
+            if (obj != null)
+            {
+                writeToFile(movieDir.getPath(), obj);
+            }
+            else
+            {
+                System.out.println("Could not find movie!");
+            }
+        }
+
+        if (Arrays.asList(movieDir.list()).contains("data.json"))
+        {
+            try
+            {
+                obj = readFromFile(movieDir.getPath());
+                if (obj != null)
+                {
+                    movie = new Movie(obj);
+                    if (!Arrays.asList(movieDir.list()).contains("poster.jpg"))
+                    {
+                        savePoster(movieDir.getPath(), obj);
+                    }
+                    movie.setPosterUrl(movieDir.getPath() + "/poster.jpg");
+                    movieList.add(movie);
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                System.out.println("Movie Directory: " + movieDir.getPath());
             }
         }
     }
@@ -277,7 +288,7 @@ public class DataGrabber
                     {
                         return m1.getLength() > m2.getLength() ? 1 : -1;
                     }
-                });                
+                });
                 break;
             case "Year":
                 Collections.sort(movieList, new Comparator<Movie>()
@@ -286,7 +297,7 @@ public class DataGrabber
                     {
                         return m1.getYear() > m2.getYear() ? 1 : -1;
                     }
-                });                    
+                });
                 break;
             default:
                 break;

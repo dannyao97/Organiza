@@ -3,10 +3,13 @@ package Organiza;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import java.awt.Point;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
@@ -111,9 +114,18 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void btnFlatPressed(ActionEvent event)
     {
-        //data.sendRequest();
-        //data.populateMovies();
-        //setupTable();
+        try
+        {
+            //data.sendRequest();
+            //data.populateMovies();
+            //setupTable();
+            ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe", "D:\\Movies\\Despicable Me 2 (2013)\\Despicable.Me.2.2013.720p.BluRay.x264.YIFY.mp4");
+            Process start = pb.start();
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
