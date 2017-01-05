@@ -23,6 +23,7 @@ import java.util.*;
 public class DataGrabber
 {
     protected ArrayList<Movie> movieList;
+    protected Movie selectedMovie;
 
     public DataGrabber()
     {
@@ -161,6 +162,16 @@ public class DataGrabber
                         savePoster(movieDir.getPath(), obj);
                     }
                     movie.setPosterUrl(movieDir.getPath() + "/poster.jpg");
+                    
+                    //Check for actual file
+                    for (String playFile: movieDir.list())
+                    {
+                        if (playFile.endsWith(".mp4") || playFile.endsWith(".mkv"))
+                        {
+                            movie.playFile = movieDir.getPath() + "\\" + playFile;
+                            break;
+                        }
+                    }
                     movieList.add(movie);
                 }
             }

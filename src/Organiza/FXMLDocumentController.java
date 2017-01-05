@@ -8,13 +8,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -87,6 +83,8 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private JFXComboBox comboSort;
     @FXML
+    private JFXButton btnPlay;
+    @FXML
     private Pane paneMovieControl;
 
     private static Stage stage;
@@ -114,7 +112,7 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void btnFlatPressed(ActionEvent event)
     {
-        try
+        /*try
         {
             //data.sendRequest();
             //data.populateMovies();
@@ -125,6 +123,27 @@ public class FXMLDocumentController implements Initializable
         catch (IOException ex)
         {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+    }
+
+    @FXML
+    private void btnPlayPressed(ActionEvent event)
+    {
+        try
+        {
+            String vlcLocation;
+            //Check if system is 64-bit
+            vlcLocation = System.getenv("ProgramFiles(x86)") != null ?
+                    "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe" : "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe";
+            
+            System.out.println("Playing Movie: " + data.selectedMovie.playFile + ".....");
+            ProcessBuilder pb = new ProcessBuilder(vlcLocation, data.selectedMovie.playFile);
+            Process start = pb.start();
+        }
+        catch (IOException ex)
+        {
+            System.out.println("ERROR: Could not open file. Try opening it manually");
+            System.out.println(data.selectedMovie.playFile);
         }
     }
 
@@ -132,6 +151,7 @@ public class FXMLDocumentController implements Initializable
     private void btnHideInfoClicked(ActionEvent event)
     {
         tableMovies.getSelectionModel().clearSelection();
+        data.selectedMovie = null;
 
         FadeTransition infoTrans = new FadeTransition(Duration.millis(200), paneMovieInfo);
         infoTrans.setFromValue(1);
@@ -248,6 +268,7 @@ public class FXMLDocumentController implements Initializable
 
     public void showMovieInfo(Movie movie)
     {
+        data.selectedMovie = movie;
         imgViewMovie.setImage(new Image("file:" + movie.posterURL));
         imgViewBackground.setImage(new Image("file:" + movie.posterURL));
         textTitle.setText(movie.Title);
@@ -456,15 +477,27 @@ public class FXMLDocumentController implements Initializable
 
     // <editor-fold defaultstate="collapsed" desc="MouseBackgrounds">
     @FXML
-    private void handleMouseEntered(MouseEvent event)
+    private void btnFlatMouseEntered(MouseEvent event)
     {
         btnFlat.setStyle("-fx-background-color: #3b92c4;");
     }
 
     @FXML
-    private void handleMouseExited(MouseEvent event)
+    private void btnFlatMouseExited(MouseEvent event)
     {
         btnFlat.setStyle("-fx-background-color: #2c2c2c;");
+    }
+
+    @FXML
+    private void btnPlayMouseEntered(MouseEvent event)
+    {
+        btnPlay.setStyle("-fx-background-color: #3b92c4;");
+    }
+
+    @FXML
+    private void btnPlayMouseExited(MouseEvent event)
+    {
+        btnPlay.setStyle("-fx-background-color: #2c2c2c;");
     }
 
     @FXML

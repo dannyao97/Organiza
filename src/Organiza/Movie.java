@@ -14,6 +14,7 @@ public class Movie
 {
     protected JsonObject movieData;
     protected String posterURL;
+    protected String playFile;
 
     protected String Title;
     protected String Year;
