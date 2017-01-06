@@ -88,6 +88,8 @@ public class FXMLDocumentController implements Initializable
     private JFXButton btnPlay;
     @FXML
     private Pane paneMovieControl;
+    @FXML
+    private JFXComboBox comboGenre;
 
     private static Stage stage;
     private Mouse mouse;
@@ -135,9 +137,9 @@ public class FXMLDocumentController implements Initializable
         {
             String vlcLocation;
             //Check if system is 64-bit
-            vlcLocation = System.getenv("ProgramFiles(x86)") != null ?
-                    "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe" : "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe";
-            
+            vlcLocation = System.getenv("ProgramFiles(x86)") != null
+                    ? "C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe" : "C:\\Program Files\\VideoLAN\\VLC\\vlc.exe";
+
             System.out.println("Playing Movie: " + data.selectedMovie.playFile + ".....");
             ProcessBuilder pb = new ProcessBuilder(vlcLocation, data.selectedMovie.playFile);
             Process start = pb.start();
@@ -204,9 +206,6 @@ public class FXMLDocumentController implements Initializable
         scrollMovies.setVisible(true);
         scrollTV.setVisible(false);
 
-        comboSort.getItems().clear();
-        comboSort.getItems().addAll("Title", "Length", "Year");
-
         paneMovieInfo.setVisible(true);
 
         if (paneMovieInfo.isVisible())
@@ -251,6 +250,9 @@ public class FXMLDocumentController implements Initializable
         clip.setLayoutY(paneMovieInfo.getHeight());
         paneMovieInfo.setClip(clip);
         paneMovieInfo.setVisible(false);
+
+        //Setup Sort combobox and Genre combobox
+        comboSort.getItems().addAll("Title", "Length", "Year");
         comboSort.setPromptText("Title");
         comboSort.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
         {
@@ -263,13 +265,30 @@ public class FXMLDocumentController implements Initializable
                 tableMovies.getColumns().clear();
                 populateTable(data.movieList);
                 tableMovies.refresh();
-                
+
+            }
+        });
+        comboGenre.getItems().addAll("All", "Action", "Adventure", "Animation",
+                "Biography", "Crime", "Comedy", "Drama", "Family", "Fantasy", "Music",
+                "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "Western");
+        comboGenre.setPromptText("All");
+        comboGenre.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
+        {
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue)
+            {
+                comboGenre.setPromptText(newValue);
+                tableMovies.getItems().clear();
+                tableMovies.getColumns().clear();
+                populateTable(data.sortGenres(newValue));
+                //tableMovies.refresh();
             }
         });
 
         //Read in movies
         btnMoviesClicked(null);
         data.populateMovies();
+        data.sortMovies(comboSort.getPromptText());
         setupTable();
     }
 
@@ -339,14 +358,24 @@ public class FXMLDocumentController implements Initializable
     public void populateTable(ArrayList<Movie> movieList)
     {
         TableColumn<TableImage, ImageView> col1 = new TableColumn<>("col1");
+        col1.setPrefWidth(210);
+        col1.setStyle("-fx-background-color: #1b1b1b;");
         ImageView img1 = null;
         TableColumn<TableImage, ImageView> col2 = new TableColumn<>("col2");
+        col2.setPrefWidth(210);
+        col2.setStyle("-fx-background-color: #1b1b1b;");
         ImageView img2 = null;
         TableColumn<TableImage, ImageView> col3 = new TableColumn<>("col3");
+        col3.setPrefWidth(210);
+        col3.setStyle("-fx-background-color: #1b1b1b;");
         ImageView img3 = null;
         TableColumn<TableImage, ImageView> col4 = new TableColumn<>("col4");
+        col4.setPrefWidth(210);
+        col4.setStyle("-fx-background-color: #1b1b1b;");
         ImageView img4 = null;
         TableColumn<TableImage, ImageView> col5 = new TableColumn<>("col5");
+        col5.setPrefWidth(210);
+        col5.setStyle("-fx-background-color: #1b1b1b;");
         ImageView img5 = null;
 
         boolean lastRowFilled = false;
@@ -470,6 +499,10 @@ public class FXMLDocumentController implements Initializable
         //IF last row is not filled
         if (!lastRowFilled)
         {
+            if (count <= 5)
+            {
+                tableMovies.getColumns().addAll(col1, col2, col3, col4, col5);
+            }
             imageList.add(new TableImage(img1, img2, img3, img4, img5));
             imageList.add(new TableImage(null, null, null, null, null));
         }

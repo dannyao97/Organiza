@@ -1,10 +1,8 @@
 package Organiza;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import com.google.gson.*;
 import java.io.BufferedInputStream;
@@ -162,9 +160,9 @@ public class DataGrabber
                         savePoster(movieDir.getPath(), obj);
                     }
                     movie.setPosterUrl(movieDir.getPath() + "/poster.jpg");
-                    
+
                     //Check for actual file
-                    for (String playFile: movieDir.list())
+                    for (String playFile : movieDir.list())
                     {
                         if (playFile.endsWith(".mp4") || playFile.endsWith(".mkv"))
                         {
@@ -288,7 +286,16 @@ public class DataGrabber
                 {
                     public int compare(Movie m1, Movie m2)
                     {
-                        return m1.Title.compareTo(m2.Title);
+                        String movie1 = m1.Title, movie2 = m2.Title;
+                        if (m1.Title.startsWith("The"))
+                        {
+                            movie1 = movie1.replaceFirst("The ", "");
+                        }
+                        if (m2.Title.startsWith("The "))
+                        {
+                            movie2 = movie2.replaceFirst("The", "");
+                        }
+                        return movie1.compareTo(movie2);
                     }
                 });
                 break;
@@ -313,5 +320,27 @@ public class DataGrabber
             default:
                 break;
         }
+    }
+
+    public ArrayList<Movie> sortGenres(String genre)
+    {
+        ArrayList<Movie> genreMovies;
+        
+        if (genre.equals("All"))
+        {
+            genreMovies = movieList;
+        }
+        else
+        {
+            genreMovies = new ArrayList<>();
+            for (Movie movie : movieList)
+            {
+                if (movie.Genre.contains(genre))
+                {
+                    genreMovies.add(movie);
+                }
+            }
+        }
+        return genreMovies;
     }
 }

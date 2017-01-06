@@ -17,14 +17,6 @@
     <children>
       <Pane fx:id="mainPane" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #1b1b1b;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton fx:id="btnFlat" layoutX="874.0" layoutY="58.0" onAction="#btnFlatPressed" onMouseEntered="#btnFlatMouseEntered" onMouseExited="#btnFlatMouseExited" prefHeight="19.0" prefWidth="111.0" style="-fx-background-color: #2c2c2c;" text="Buttons" textFill="#cdcbcb">
-               <font>
-                  <Font name="Segoe UI" size="18.0" />
-               </font>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </JFXButton>
             <Pane fx:id="headerPane" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #2c2c2c;">
                <children>
                   <JFXButton fx:id="btnExit" alignment="BASELINE_CENTER" layoutX="947.0" layoutY="-1.0" onAction="#btnExitPressed" onMouseEntered="#btnExitMouseEntered" onMouseExited="#btnExitMouseExited" style="-fx-background-color: transparent;" text="X" textAlignment="JUSTIFY" textFill="#3b92c4">
@@ -71,6 +63,14 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="708.0" prefWidth="1000.0" style="-fx-background-color: #abbc31;" />
                </content>
             </ScrollPane>
+            <JFXButton fx:id="btnFlat" layoutX="874.0" layoutY="58.0" onAction="#btnFlatPressed" onMouseEntered="#btnFlatMouseEntered" onMouseExited="#btnFlatMouseExited" prefHeight="19.0" prefWidth="111.0" style="-fx-background-color: #2c2c2c;" text="Buttons" textFill="#cdcbcb">
+               <font>
+                  <Font name="Segoe UI" size="18.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXButton>
             <Pane fx:id="paneMovieInfo" layoutY="100.0" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #3c3c3c;" visible="false">
                <effect>
                   <DropShadow height="54.7325" radius="26.588124999999998" spread="0.11" width="53.62" />
@@ -207,6 +207,16 @@
                      </font>
                   </Label>
                   <JFXComboBox fx:id="comboSort" layoutX="106.0" layoutY="13.0" prefHeight="25.0" prefWidth="100.0" style="-fx-background-color: #9f9f9f;" stylesheets="@TableCss.css">
+                     <effect>
+                        <DropShadow blurType="GAUSSIAN" />
+                     </effect>
+                  </JFXComboBox>
+                  <Label layoutX="236.0" layoutY="14.0" prefHeight="23.0" prefWidth="94.0" text="Genre:" textFill="#b9b9b9">
+                     <font>
+                        <Font name="Segoe UI" size="18.0" />
+                     </font>
+                  </Label>
+                  <JFXComboBox fx:id="comboGenre" layoutX="313.0" layoutY="13.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #9f9f9f;" stylesheets="@TableCss.css">
                      <effect>
                         <DropShadow blurType="GAUSSIAN" />
                      </effect>
