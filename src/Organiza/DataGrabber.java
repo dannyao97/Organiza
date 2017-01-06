@@ -21,6 +21,7 @@ import java.util.*;
 public class DataGrabber
 {
     protected ArrayList<Movie> movieList;
+    protected ArrayList<Movie> currentMovieList;
     protected Movie selectedMovie;
 
     public DataGrabber()
@@ -127,6 +128,7 @@ public class DataGrabber
                 //break;
             }
         }
+        currentMovieList = movieList;
     }
 
     public void checkData(File movieDir, String movieName)
@@ -282,7 +284,7 @@ public class DataGrabber
         switch (sort)
         {
             case "Title":
-                Collections.sort(movieList, new Comparator<Movie>()
+                Collections.sort(currentMovieList, new Comparator<Movie>()
                 {
                     public int compare(Movie m1, Movie m2)
                     {
@@ -300,7 +302,7 @@ public class DataGrabber
                 });
                 break;
             case "Length":
-                Collections.sort(movieList, new Comparator<Movie>()
+                Collections.sort(currentMovieList, new Comparator<Movie>()
                 {
                     public int compare(Movie m1, Movie m2)
                     {
@@ -309,7 +311,7 @@ public class DataGrabber
                 });
                 break;
             case "Year":
-                Collections.sort(movieList, new Comparator<Movie>()
+                Collections.sort(currentMovieList, new Comparator<Movie>()
                 {
                     public int compare(Movie m1, Movie m2)
                     {
@@ -322,25 +324,22 @@ public class DataGrabber
         }
     }
 
-    public ArrayList<Movie> sortGenres(String genre)
+    public void sortGenres(String genre)
     {
-        ArrayList<Movie> genreMovies;
-        
         if (genre.equals("All"))
         {
-            genreMovies = movieList;
+            currentMovieList = movieList;
         }
         else
         {
-            genreMovies = new ArrayList<>();
+            currentMovieList = new ArrayList<>();
             for (Movie movie : movieList)
             {
                 if (movie.Genre.contains(genre))
                 {
-                    genreMovies.add(movie);
+                    currentMovieList.add(movie);
                 }
             }
         }
-        return genreMovies;
     }
 }

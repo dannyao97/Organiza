@@ -90,6 +90,8 @@ public class FXMLDocumentController implements Initializable
     private Pane paneMovieControl;
     @FXML
     private JFXComboBox comboGenre;
+    @FXML
+    private Label lblCoverScroll;
 
     private static Stage stage;
     private Mouse mouse;
@@ -250,6 +252,7 @@ public class FXMLDocumentController implements Initializable
         clip.setLayoutY(paneMovieInfo.getHeight());
         paneMovieInfo.setClip(clip);
         paneMovieInfo.setVisible(false);
+        lblCoverScroll.setVisible(false);
 
         //Setup Sort combobox and Genre combobox
         comboSort.getItems().addAll("Title", "Length", "Year");
@@ -260,10 +263,11 @@ public class FXMLDocumentController implements Initializable
                     String oldValue, String newValue)
             {
                 comboSort.setPromptText(newValue);
+                data.sortGenres(comboGenre.getPromptText());
                 data.sortMovies(newValue);
                 tableMovies.getItems().clear();
                 tableMovies.getColumns().clear();
-                populateTable(data.movieList);
+                populateTable(data.currentMovieList);
                 tableMovies.refresh();
 
             }
@@ -280,8 +284,10 @@ public class FXMLDocumentController implements Initializable
                 comboGenre.setPromptText(newValue);
                 tableMovies.getItems().clear();
                 tableMovies.getColumns().clear();
-                populateTable(data.sortGenres(newValue));
-                //tableMovies.refresh();
+                data.sortGenres(newValue);
+                data.sortMovies(comboSort.getPromptText());
+                populateTable(data.currentMovieList);
+                tableMovies.refresh();
             }
         });
 
@@ -343,7 +349,7 @@ public class FXMLDocumentController implements Initializable
                 }
             }
         });
-        populateTable(data.movieList);
+        populateTable(data.currentMovieList);
         Pane header = (Pane) tableMovies.lookup("TableHeaderRow");
         if (header != null && header.isVisible())
         {
@@ -507,6 +513,16 @@ public class FXMLDocumentController implements Initializable
             imageList.add(new TableImage(null, null, null, null, null));
         }
 
+        //If less than 10 movies
+        if (count <= 10)
+        {
+            lblCoverScroll.setVisible(true);
+        }
+        else
+        {
+            lblCoverScroll.setVisible(false);
+        }
+        
         tableMovies.setItems(imageList);
     }
 

@@ -52,12 +52,12 @@
                      <children>
                         <TableView fx:id="tableMovies" layoutX="15.0" layoutY="6.0" prefHeight="703.0" prefWidth="983.0" style="-fx-background-color: #1b1b1b; -fx-table-cell-border-color: #1b1b1b; -fx-text-fill: #1b1b1b; -fx-text-background-color: #1b1b1b; -fx-border-width: 0;" stylesheets="@TableCss.css" />
                         <Label layoutY="683.0" prefHeight="25.0" prefWidth="980.0" style="-fx-background-color: #1b1b1b;" />
-                        <Label layoutX="974.0" layoutY="-4.0" prefHeight="35.0" prefWidth="27.0" style="-fx-background-color: #1b1b1b;" />
                         <Label layoutX="948.0" layoutY="693.0" prefHeight="9.0" prefWidth="53.0" style="-fx-background-color: #1b1b1b;" />
                      </children>
                   </AnchorPane>
               </content>
             </ScrollPane>
+            <Label layoutX="946.0" layoutY="107.0" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #1b1b1b;" />
             <ScrollPane fx:id="scrollTV" hbarPolicy="NEVER" layoutY="99.0" prefHeight="710.0" prefWidth="1000.0" visible="false">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="708.0" prefWidth="1000.0" style="-fx-background-color: #abbc31;" />
@@ -225,6 +225,7 @@
             </Pane>
          </children>
       </Pane>
+      <Label fx:id="lblCoverScroll" layoutX="979.0" layoutY="91.0" prefHeight="719.0" prefWidth="20.0" style="-fx-background-color: #1b1b1b;" />
     </children>
    <effect>
       <DropShadow blurType="GAUSSIAN" height="44.715" radius="25.56375" spread="0.3" width="59.54" />
