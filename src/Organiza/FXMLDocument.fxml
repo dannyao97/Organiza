@@ -199,7 +199,7 @@
                   </JFXButton>
                </children>
             </Pane>
-            <Pane fx:id="paneMovieControl" disable="true" layoutY="51.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #1b1b1b;" visible="false">
+            <Pane fx:id="paneMovieControl" layoutY="51.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #1b1b1b;">
                <children>
                   <Label layoutX="27.0" layoutY="14.0" prefHeight="23.0" prefWidth="94.0" text="Sort By:" textFill="#b9b9b9">
                      <font>

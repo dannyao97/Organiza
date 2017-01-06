@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -249,16 +251,21 @@ public class FXMLDocumentController implements Initializable
         clip.setLayoutY(paneMovieInfo.getHeight());
         paneMovieInfo.setClip(clip);
         paneMovieInfo.setVisible(false);
-        /*comboSort.setPromptText("Title");
+        comboSort.setPromptText("Title");
         comboSort.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
         {
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue)
             {
                 comboSort.setPromptText(newValue);
-                //data.sortMovies(newValue);
+                data.sortMovies(newValue);
+                tableMovies.getItems().clear();
+                tableMovies.getColumns().clear();
+                populateTable(data.movieList);
+                tableMovies.refresh();
+                
             }
-        });*/
+        });
 
         //Read in movies
         btnMoviesClicked(null);
